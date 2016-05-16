@@ -1,5 +1,6 @@
 NRLINESTOREAD=10000
 OUTDIR=out
+MODELSDIR=models
 
 CORPUS=${OUTDIR}/corpus.txt
 VOCAB_FILE=${OUTDIR}/vocab.txt
@@ -7,7 +8,8 @@ VOCAB_FILE=${OUTDIR}/vocab.txt
 COOCCURRENCE_FILE=${OUTDIR}/cooccurrence.bin
 COOCCURRENCE_SHUF_FILE=${OUTDIR}/cooccurrence.shuf.bin
 
-SAVE_FILE=${OUTDIR}/vectors
+VECTORSBASENAME=vectors
+SAVE_FILE=${OUTDIR}/${VECTORSBASENAME}
 VERBOSE=2
 MEMORY=4.0
 VOCAB_MIN_COUNT=5
@@ -48,3 +50,13 @@ ${COOCCURRENCE_SHUF_FILE}: ${COOCCURRENCE_FILE}
 
 ${SAVE_FILE}.txt: ${COOCCURRENCE_SHUF_FILE}
 	glove -save-file ${SAVE_FILE} -threads ${NUM_THREADS} -input-file ${COOCCURRENCE_SHUF_FILE} -x-max ${X_MAX} -iter ${MAX_ITER} -vector-size ${VECTOR_SIZE} -binary ${BINARY} -vocab-file ${VOCAB_FILE} -verbose ${VERBOSE}
+
+publish: ${SAVE_FILE}.txt
+	mkdir -p ${MODELSDIR}
+	VOCAB_SIZE=`/bin/cat ${VOCAB_FILE} | /usr/bin/wc -l | perl -ne "s/\s+//; print"`; \
+	MODEL_IN_WORD2VEC_FORMAT=${MODELSDIR}/${VECTORSBASENAME}_$${VOCAB_SIZE}_tokens_${VECTOR_SIZE}_dims.txt; \
+	echo $${VOCAB_SIZE} ${VECTOR_SIZE} >> $${MODEL_IN_WORD2VEC_FORMAT}; \
+	cat ${SAVE_FILE}.txt >> $${MODEL_IN_WORD2VEC_FORMAT}; \
+	cp ${VOCAB_FILE} ${MODELSDIR}/vocab_$${VOCAB_SIZE}_tokens.txt; \
+	chmod -w $$MODEL_IN_WORD2VEC_FORMAT; \
+	chmod -w ${MODELSDIR}/vocab_$${VOCAB_SIZE}_tokens.txt
