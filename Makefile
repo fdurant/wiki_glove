@@ -33,7 +33,7 @@ ${CORPUS}:
 	mkdir -p ${OUTDIR}
 	for FILE in `ls -1 texts/*/*/wiki*`; do \
 		/bin/echo -n "Processing $${FILE} ..."; \
-		cat $${FILE} | perl 1doc_per_line.pl | python src/sentence_splitter.py | perl src/tokenize.pl >> ${CORPUS}; \
+		cat $${FILE} | perl src/1doc_per_line.pl | python src/sentence_splitter.py | perl src/tokenize.pl >> ${CORPUS}; \
 		/bin/echo "done"; \
 	done
 
