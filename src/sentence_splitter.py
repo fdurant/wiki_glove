@@ -3,13 +3,17 @@ from nltk.tokenize import word_tokenize
 import sys
 import codecs
 
-sent_tokenizer = nltk.data.load('tokenizers/punkt/dutch.pickle')
+lang = argv[1]
+
+lang2name = {'nl':'dutch',
+             'fr':'french',
+             'en':'english'}
+
+sent_tokenizer = nltk.data.load('tokenizers/punkt/%s.pickle'%lang2name(lang))
 
 def tokenize(text):
     for sentence in sent_tokenizer.tokenize(text):
         yield word_tokenize(sentence)
-
-#sentences = tokenize('Alle vogels zijn nesten begonnen, behalve ik en jij. Waar wachten wij nu op? Dr. Jan is al naar huis. 2.6 maal 5.12 = 13.19.')
 
 UTF8Reader = codecs.getreader('utf8')
 sys.stdin = UTF8Reader(sys.stdin)

@@ -1,7 +1,12 @@
+# Adapted from https://github.com/stanfordnlp/GloVe/blob/master/demo.sh
+
 NRLINESTOREAD=10000
+DATADIR=data
 OUTDIR=out
 MODELSDIR=models
+TEXTSDIR=texts
 
+LANG=nl
 CORPUS=${OUTDIR}/corpus.txt
 VOCAB_FILE=${OUTDIR}/vocab.txt
 
@@ -28,14 +33,24 @@ what:
 clean:
 	rm -rf ${OUTDIR}
 
+# Wiki files downloaded from https://dumps.wikimedia.org/nlwiki/20160501/
+# and unzipped into ${DATADIR} 
+
 parsewiki:
-	python src/WikiExtractor.py nlwiki-20160501-pages-articles.xml -o -
+	mkdir -p ${TEXTSDIR}/${LANG}
+	NRXMLFILES=`ls -1 ${DATADIR}/${LANG}*.xml | wc -l | perl -ne 's/\s*(\d+)\s*/\1/; print'`; \
+	echo "found $$NRXMLFILES XML files"; \
+	for ((COUNTER=1; COUNTER <= $$NRXMLFILES; COUNTER++)); do \
+		echo "Processing loop $${COUNTER}"; \
+		mkdir -p ${TEXTSDIR}/${LANG}/text$${COUNTER}; \
+		python src/WikiExtractor.py ${DATADIR}/${LANG}wiki*$${COUNTER}.xml -o ${TEXTSDIR}/${LANG}/text$${COUNTER}; \
+	done
 
 ${CORPUS}:
 	mkdir -p ${OUTDIR}
-	for FILE in `ls -1 texts/*/*/wiki*`; do \
+	for FILE in `ls -1 $${TEXTSDIR}/nl/*/*/wiki*`; do \
 		/bin/echo -n "Processing $${FILE} ..."; \
-		cat $${FILE} | perl src/1doc_per_line.pl | python src/sentence_splitter.py | perl src/tokenize.pl >> ${CORPUS}; \
+		cat $${FILE} | perl src/1doc_per_line.pl | python src/sentence_splitter.py ${LANG} | perl src/tokenize.pl >> ${CORPUS}; \
 		/bin/echo "done"; \
 	done
 
@@ -54,9 +69,9 @@ ${SAVE_FILE}.txt: ${COOCCURRENCE_SHUF_FILE}
 publish: ${SAVE_FILE}.txt
 	mkdir -p ${MODELSDIR}
 	VOCAB_SIZE=`/bin/cat ${VOCAB_FILE} | /usr/bin/wc -l | perl -ne "s/\s+//; print"`; \
-	MODEL_IN_WORD2VEC_FORMAT=${MODELSDIR}/${VECTORSBASENAME}_$${VOCAB_SIZE}_tokens_${VECTOR_SIZE}_dims.txt; \
+	MODEL_IN_WORD2VEC_FORMAT=${MODELSDIR}/${VECTORSBASENAME}_${LANG}_$${VOCAB_SIZE}_tokens_${VECTOR_SIZE}_dims.txt; \
 	echo $${VOCAB_SIZE} ${VECTOR_SIZE} >> $${MODEL_IN_WORD2VEC_FORMAT}; \
 	cat ${SAVE_FILE}.txt >> $${MODEL_IN_WORD2VEC_FORMAT}; \
-	cp ${VOCAB_FILE} ${MODELSDIR}/vocab_$${VOCAB_SIZE}_tokens.txt; \
+	cp ${VOCAB_FILE} ${MODELSDIR}/vocab_${LANG}_$${VOCAB_SIZE}_tokens.txt; \
 	chmod -w $$MODEL_IN_WORD2VEC_FORMAT; \
-	chmod -w ${MODELSDIR}/vocab_$${VOCAB_SIZE}_tokens.txt
+	chmod -w ${MODELSDIR}/vocab_${LANG}_$${VOCAB_SIZE}_tokens.txt
