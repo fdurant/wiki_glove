@@ -36,13 +36,13 @@ The extracted files are to be found in texts/nl/text[1234]/??/wiki*
 $ make LANG=nl out/nl_corpus.txt
 ```
 
-# Step 4: Build the vocab file
+# Step 4: Build the vocab file (using GloVe binaries)
 
 ```bash
 $ make LANG=nl VOCAB_MIN_COUNT=3 out/nl_vocab.txt
 ```
 
-# Step 5: Build the GloVe model
+# Step 5: Build the GloVe model (using GloVe binaries)
 
 ```bash
 $ make LANG=nl VECTOR_SIZE=50 out/nl_vectors.txt
