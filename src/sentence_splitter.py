@@ -3,13 +3,13 @@ from nltk.tokenize import word_tokenize
 import sys
 import codecs
 
-lang = argv[1]
+lang = sys.argv[1]
 
 lang2name = {'nl':'dutch',
              'fr':'french',
              'en':'english'}
 
-sent_tokenizer = nltk.data.load('tokenizers/punkt/%s.pickle'%lang2name(lang))
+sent_tokenizer = nltk.data.load('tokenizers/punkt/%s.pickle'%lang2name[lang])
 
 def tokenize(text):
     for sentence in sent_tokenizer.tokenize(text):

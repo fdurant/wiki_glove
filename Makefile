@@ -6,7 +6,7 @@ OUTDIR=out
 MODELSDIR=models
 TEXTSDIR=texts
 
-LANG=nl
+LANG=fr
 CORPUS=${OUTDIR}/corpus.txt
 VOCAB_FILE=${OUTDIR}/vocab.txt
 
@@ -18,7 +18,7 @@ SAVE_FILE=${OUTDIR}/${VECTORSBASENAME}
 VERBOSE=2
 MEMORY=4.0
 VOCAB_MIN_COUNT=5
-VECTOR_SIZE=100
+VECTOR_SIZE=50
 MAX_ITER=15
 WINDOW_SIZE=15
 BINARY=2
@@ -48,7 +48,7 @@ parsewiki:
 
 ${CORPUS}:
 	mkdir -p ${OUTDIR}
-	for FILE in `ls -1 $${TEXTSDIR}/nl/*/*/wiki*`; do \
+	for FILE in `ls -1 ${TEXTSDIR}/${LANG}/*/*/wiki*`; do \
 		/bin/echo -n "Processing $${FILE} ..."; \
 		cat $${FILE} | perl src/1doc_per_line.pl | python src/sentence_splitter.py ${LANG} | perl src/tokenize.pl >> ${CORPUS}; \
 		/bin/echo "done"; \
@@ -68,7 +68,7 @@ ${SAVE_FILE}.txt: ${COOCCURRENCE_SHUF_FILE}
 
 publish: ${SAVE_FILE}.txt
 	mkdir -p ${MODELSDIR}
-	VOCAB_SIZE=`/bin/cat ${VOCAB_FILE} | /usr/bin/wc -l | perl -ne "s/\s+//; print"`; \
+	VOCAB_SIZE=`/bin/cat ${VOCAB_FILE} | /usr/bin/wc -l | perl -ne "s/\s+//; print $_ + 1"`; \
 	MODEL_IN_WORD2VEC_FORMAT=${MODELSDIR}/${VECTORSBASENAME}_${LANG}_$${VOCAB_SIZE}_tokens_${VECTOR_SIZE}_dims.txt; \
 	echo $${VOCAB_SIZE} ${VECTOR_SIZE} >> $${MODEL_IN_WORD2VEC_FORMAT}; \
 	cat ${SAVE_FILE}.txt >> $${MODEL_IN_WORD2VEC_FORMAT}; \
