@@ -68,7 +68,7 @@ ${SAVE_FILE}.txt: ${COOCCURRENCE_SHUF_FILE}
 
 publish: ${SAVE_FILE}.txt
 	mkdir -p ${MODELSDIR}
-	VOCAB_SIZE=`/bin/cat ${VOCAB_FILE} | /usr/bin/wc -l | perl -ne "s/\s+//; print $$_ + 1"`; \
+	VOCAB_SIZE=`/bin/cat ${VOCAB_FILE} | /usr/bin/wc -l | perl -ne "s/\s+//; print int($$_) + 1"`; \
 	MODEL_IN_WORD2VEC_FORMAT=${MODELSDIR}/${VECTORSBASENAME}_${LANG}_$${VOCAB_SIZE}_tokens_${VECTOR_SIZE}_dims.txt; \
 	echo $${VOCAB_SIZE} ${VECTOR_SIZE} >> $${MODEL_IN_WORD2VEC_FORMAT}; \
 	cat ${SAVE_FILE}.txt >> $${MODEL_IN_WORD2VEC_FORMAT}; \
