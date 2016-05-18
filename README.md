@@ -17,6 +17,7 @@ $ bunzip2 nlwiki-20160501-pages-articles1.xml.bz2
 $ bunzip2 nlwiki-20160501-pages-articles2.xml.bz2
 $ bunzip2 nlwiki-20160501-pages-articles3.xml.bz2
 $ bunzip2 nlwiki-20160501-pages-articles4.xml.bz2
+$ cd ..
 ```
 
 # Step 2: Parse the data into smaller files, using Giuseppe Attardi's [wikiextractor](https://github.com/attardi/wikiextractor)
