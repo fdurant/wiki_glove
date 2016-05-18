@@ -6,18 +6,18 @@ OUTDIR=out
 MODELSDIR=models
 TEXTSDIR=texts
 
-LANG=fr
-CORPUS=${OUTDIR}/corpus.txt
-VOCAB_FILE=${OUTDIR}/vocab.txt
+LANG=nl
+CORPUS=${OUTDIR}/${LANG}_corpus.txt
+VOCAB_FILE=${OUTDIR}/${LANG}_vocab.txt
 
-COOCCURRENCE_FILE=${OUTDIR}/cooccurrence.bin
-COOCCURRENCE_SHUF_FILE=${OUTDIR}/cooccurrence.shuf.bin
+COOCCURRENCE_FILE=${OUTDIR}/${LANG}_cooccurrence.bin
+COOCCURRENCE_SHUF_FILE=${OUTDIR}/${LANG}_cooccurrence.shuf.bin
 
 VECTORSBASENAME=vectors
-SAVE_FILE=${OUTDIR}/${VECTORSBASENAME}
+SAVE_FILE=${OUTDIR}/${LANG}_${VECTORSBASENAME}
 VERBOSE=2
 MEMORY=4.0
-VOCAB_MIN_COUNT=5
+VOCAB_MIN_COUNT=3
 VECTOR_SIZE=50
 MAX_ITER=15
 WINDOW_SIZE=15
@@ -68,7 +68,7 @@ ${SAVE_FILE}.txt: ${COOCCURRENCE_SHUF_FILE}
 
 publish: ${SAVE_FILE}.txt
 	mkdir -p ${MODELSDIR}
-	VOCAB_SIZE=`/bin/cat ${VOCAB_FILE} | /usr/bin/wc -l | perl -ne "s/\s+//; print $_ + 1"`; \
+	VOCAB_SIZE=`/bin/cat ${VOCAB_FILE} | /usr/bin/wc -l | perl -ne "s/\s+//; print $$_ + 1"`; \
 	MODEL_IN_WORD2VEC_FORMAT=${MODELSDIR}/${VECTORSBASENAME}_${LANG}_$${VOCAB_SIZE}_tokens_${VECTOR_SIZE}_dims.txt; \
 	echo $${VOCAB_SIZE} ${VECTOR_SIZE} >> $${MODEL_IN_WORD2VEC_FORMAT}; \
 	cat ${SAVE_FILE}.txt >> $${MODEL_IN_WORD2VEC_FORMAT}; \
