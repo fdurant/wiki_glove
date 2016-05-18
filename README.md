@@ -4,6 +4,8 @@ This small repo collects a Makefile and a couple of (partially borrowed a/o adap
 
 The procedure for Dutch goes as follows:
 
+# Step 0: Install the [GloVe](https://github.com/stanfordnlp/GloVe) binaries
+
 # Step 1: Download and unzip Wikipedia data
 
 ````bash
