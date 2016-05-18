@@ -49,7 +49,9 @@ $ make LANG=nl VECTOR_SIZE=50 out/nl_vectors.txt
 # Step 6: Publish the final model in [Word2Vec](https://en.wikipedia.org/wiki/Word2vec) format
 
 ```bash
-$ make LANG=NL publish
+$ make LANG=nl publish
 ```
 
 The final model is written in the directory _models_. It is directly usable with [gensim's Word2Vec](https://radimrehurek.com/gensim/models/word2vec.html) module.
+
+The procedure for French is completely analogous. Other languages are currently not handled by the (admittedly oversimplified) tokenization script.
