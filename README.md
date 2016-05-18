@@ -25,9 +25,9 @@ $ bunzip2 nlwiki-20160501-pages-articles4.xml.bz2
 $ make LANG=nl parsewiki
 ```
 
-The extracted files are to be found in texts/nl/text[1234]/*/wiki*
+The extracted files are to be found in texts/nl/text[1234]/??/wiki*
 
-# Step 3: Split sentences and do some rudimentary tokenization
+# Step 3: Split in sentences and tokenize
 
 ```bash
 $ make LANG=nl out/nl_corpus.txt
@@ -45,7 +45,7 @@ $ make LANG=nl VOCAB_MIN_COUNT=3 out/nl_vocab.txt
 $ make LANG=nl VECTOR_SIZE=50 out/nl_vectors.txt
 ```
 
-# Step 6: publish the final model in [Word2Vec](https://en.wikipedia.org/wiki/Word2vec) format
+# Step 6: Publish the final model in [Word2Vec](https://en.wikipedia.org/wiki/Word2vec) format
 
 ```bash
 $ make LANG=NL publish
