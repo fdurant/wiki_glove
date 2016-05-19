@@ -2,6 +2,7 @@ import nltk.data
 from nltk.tokenize import word_tokenize
 import sys
 import codecs
+import langid
 
 lang = sys.argv[1]
 
@@ -23,5 +24,9 @@ sys.stdout = UTF8Writer(sys.stdout)
 
 for doc in sys.stdin:
     for sentence in tokenize(doc):
-        for token in sentence:
-            print >> sys.stdout, "%s" % token,
+        guessedLanguage = langid.classify(" ".join(sentence))[0]
+#        if guessedLanguage != lang:
+#            print >> sys.stderr, "Found '%s' sentence: " % guessedLanguage, sentence
+        if guessedLanguage == lang:
+            for token in sentence:
+                print >> sys.stdout, "%s" % token,
