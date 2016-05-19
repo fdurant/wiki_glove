@@ -5,7 +5,7 @@ This small repo collects a Makefile and a couple of (partially borrowed a/o adap
 # Step 0: Install prerequisite software
 
 - the [GloVe](https://github.com/stanfordnlp/GloVe) binaries
-- the NLTK python library
+- the [NLTK](http://www.nltk.org) python library
 - Giuseppe Attardi's [wikiextractor](https://github.com/attardi/wikiextractor) script
 
 ````bash
