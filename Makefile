@@ -6,7 +6,7 @@ OUTDIR=out
 MODELSDIR=models
 TEXTSDIR=texts
 
-LANG=nl
+LANG=fr
 CORPUS=${OUTDIR}/${LANG}_corpus.txt
 VOCAB_FILE=${OUTDIR}/${LANG}_vocab.txt
 

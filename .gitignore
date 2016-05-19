@@ -8,3 +8,4 @@ out
 data
 texts
 models
+src/WikiExtractor.py

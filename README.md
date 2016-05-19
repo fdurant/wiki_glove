@@ -2,9 +2,20 @@
 
 This small repo collects a Makefile and a couple of (partially borrowed a/o adapted) scripts that produce GloVe models from freely available Wikipedia data, in Dutch and in French.
 
-The procedure for Dutch goes as follows:
+# Step 0: Install prerequisite software
 
-# Step 0: Install the [GloVe](https://github.com/stanfordnlp/GloVe) binaries
+- the [GloVe](https://github.com/stanfordnlp/GloVe) binaries
+- the NLTK python library
+- Giuseppe Attardi's [wikiextractor](https://github.com/attardi/wikiextractor) script
+
+````bash
+$ mkdir src
+$ cd src
+$ wget https://raw.githubusercontent.com/attardi/wikiextractor/master/WikiExtractor.py
+$ cd ..
+```
+
+The procedure for Dutch ('nl') then goes as follows:
 
 # Step 1: Download and unzip Wikipedia data
 
@@ -22,7 +33,7 @@ $ bunzip2 nlwiki-20160501-pages-articles4.xml.bz2
 $ cd ..
 ```
 
-# Step 2: Parse the data into smaller files, using Giuseppe Attardi's [wikiextractor](https://github.com/attardi/wikiextractor)
+# Step 2: Parse the data into smaller files
 
 ````bash
 $ make LANG=nl parsewiki
