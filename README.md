@@ -67,4 +67,4 @@ $ make LANG=nl publish
 
 The final model is written in the directory _models_. It is directly usable with [gensim's Word2Vec](https://radimrehurek.com/gensim/models/word2vec.html) module.
 
-The procedure for French is completely analogous. Other languages are currently not handled by the (admittedly oversimplified) tokenization script.
+The procedure for French ('fr') is completely analogous. Other languages are currently not handled by the (admittedly oversimplified) tokenization script.
