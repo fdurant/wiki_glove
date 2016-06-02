@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+my $printNewLine = $ARGV[0];
+
 while(<STDIN>) {
     s/\s['`"]+\s+/ /g;
     s/\s['`"](\S)/ $1/g;
@@ -23,4 +25,7 @@ while(<STDIN>) {
     s/Ù/ù/g;
     s/Ú/ú/g;
     print lc($_);
+    if ($printNewLine =~ m/yes/) {
+	print "\n";
+    }
 }

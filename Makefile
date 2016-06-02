@@ -50,7 +50,7 @@ ${CORPUS}:
 	mkdir -p ${OUTDIR}
 	for FILE in `ls -1 ${TEXTSDIR}/${LANG}/*/*/wiki*`; do \
 		/bin/echo -n "Processing $${FILE} ..."; \
-		cat $${FILE} | perl src/1doc_per_line.pl | python src/sentence_splitter.py ${LANG} | perl src/tokenize.pl >> ${CORPUS}; \
+		cat $${FILE} | perl src/1doc_per_line.pl | python src/sentence_splitter.py ${LANG} yes no | perl src/tokenize.pl no >> ${CORPUS}; \
 		/bin/echo "done"; \
 	done
 

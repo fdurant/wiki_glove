@@ -5,6 +5,8 @@ import codecs
 import langid
 
 lang = sys.argv[1]
+guessLang = sys.argv[2]
+printNewLine = sys.argv[3]
 
 lang2name = {'nl':'dutch',
              'fr':'french',
@@ -24,9 +26,14 @@ sys.stdout = UTF8Writer(sys.stdout)
 
 for doc in sys.stdin:
     for sentence in tokenize(doc):
-        guessedLanguage = langid.classify(" ".join(sentence))[0]
-#        if guessedLanguage != lang:
-#            print >> sys.stderr, "Found '%s' sentence: " % guessedLanguage, sentence
-        if guessedLanguage == lang:
+        if guessLang != 'yes':
             for token in sentence:
                 print >> sys.stdout, "%s" % token,
+        else:
+            guessedLanguage = langid.classify(" ".join(sentence))[0]
+            if (guessedLanguage == lang):
+                for token in sentence:
+                    print >> sys.stdout, "%s" % token,
+
+    if printNewLine == 'yes':
+        print >> sys.stdout, ""
